@@ -178,10 +178,7 @@ export default function ProductionSection() {
                 Работа с нами исключает риски контрафактной продукции и обеспечивает полную
                 документальную поддержку для государственных закупок.
               </p>
-              <div className="mt-4 flex items-center gap-2 text-brand-orange text-sm font-semibold font-body">
-                <Icon name="FileText" size={16} />
-                Полный пакет документов для тендеров
-              </div>
+
             </div>
           </div>
         </div>
