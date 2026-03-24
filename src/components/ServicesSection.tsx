@@ -117,13 +117,6 @@ export default function ServicesSection() {
               }`}>
                 <Icon name={p.icon} size={24} />
               </div>
-              <span className={`text-xs font-semibold px-2 py-1 rounded-md mb-3 inline-block ${
-                p.color === "blue"
-                  ? "bg-brand-blue/10 text-brand-blue"
-                  : "bg-brand-orange/10 text-brand-orange"
-              } font-body`}>
-                {p.tag}
-              </span>
               <h3 className="font-display text-lg font-bold text-foreground mb-2">{p.title}</h3>
               <p className="text-sm text-muted-foreground font-body leading-relaxed">{p.desc}</p>
             </div>
