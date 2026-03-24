@@ -18,7 +18,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
-              Поставщик аккумуляторов для БПЛА. Прямые поставки из Китая, собственное производство в России.
+              Поставщик аккумуляторов и комплектующих для БПЛА. Прямые поставки из Китая, собственное производство в России.
             </p>
           </div>
 
@@ -71,7 +71,7 @@ export default function Footer() {
             © 2024 ООО «СВ-ТехноГрупп». Все права защищены.
           </p>
           <p className="text-xs text-muted-foreground font-body">
-            Поставщик аккумуляторов для БПЛА · Россия
+            Поставщик комплектующих для БПЛА · Россия
           </p>
         </div>
       </div>
