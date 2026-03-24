@@ -3,12 +3,6 @@ import Icon from "@/components/ui/icon";
 
 const contacts = [
   {
-    role: "Коммерческий директор",
-    phone: "8-986-741-99-24",
-    email: "sv-group33@mail.ru",
-    icon: "User",
-  },
-  {
     role: "Отдел продаж",
     phone: "8-995-313-75-26",
     email: "manager.sv-group33@mail.ru",
@@ -87,7 +81,6 @@ export default function ContactSection() {
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto font-body text-lg">
             Работаем с государственными заказчиками, интеграторами и B2B клиентами.
-            Предоставляем полный пакет документов для участия в тендерах.
           </p>
         </div>
 
@@ -129,16 +122,7 @@ export default function ContactSection() {
               </div>
             ))}
 
-            <div className="p-6 rounded-xl border border-brand-orange/20 bg-brand-orange/5">
-              <div className="flex items-center gap-2 mb-3">
-                <Icon name="FileText" size={18} className="text-brand-orange" />
-                <span className="font-display text-base font-bold text-foreground">Государственные закупки</span>
-              </div>
-              <p className="text-sm text-muted-foreground font-body leading-relaxed">
-                Предоставляем полный пакет документов для участия в тендерах и государственных закупках.
-                Работаем с государственными заказчиками и интеграторами.
-              </p>
-            </div>
+
           </div>
 
           <div className="reveal">

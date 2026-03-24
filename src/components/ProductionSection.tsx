@@ -1,9 +1,6 @@
 import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const FACTORY_IMAGE =
-  "https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/files/6de7ad61-590b-4868-901d-8a29c7c3767a.jpg";
-
 const batteries = [
   {
     model: "6S3P 12000 мАч",
@@ -92,23 +89,8 @@ export default function ProductionSection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          <div className="reveal relative order-2 lg:order-1">
-            <div className="absolute inset-0 bg-brand-blue/10 rounded-2xl blur-3xl" />
-            <img
-              src={FACTORY_IMAGE}
-              alt="Производство аккумуляторов"
-              className="relative z-10 w-full rounded-2xl object-cover border border-brand-blue/20"
-            />
-            <div className="absolute -bottom-4 -right-4 p-4 bg-background border border-brand-blue/30 rounded-xl glow-blue">
-              <div className="flex items-center gap-2">
-                <Icon name="Zap" size={16} className="text-brand-blue" />
-                <span className="text-sm font-body text-foreground font-semibold">Собственное пр-во РФ</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2 space-y-4 reveal">
+        <div className="max-w-2xl mx-auto mb-20">
+          <div className="space-y-4 reveal">
             <h3 className="font-display text-2xl font-bold text-foreground mb-6">
               Примеры наших АКБ
             </h3>

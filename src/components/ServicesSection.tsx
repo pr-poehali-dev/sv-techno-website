@@ -30,7 +30,7 @@ const products = [
     icon: "Settings",
     title: "Исполнительные механизмы",
     desc: "Сервоприводы, моторы и механизмы управления БПЛА",
-    tag: "На складе",
+    tag: "Brother Hobby",
     color: "orange",
   },
   {
@@ -44,7 +44,7 @@ const products = [
     icon: "Radio",
     title: "Системы связи",
     desc: "Надёжные каналы передачи данных и телеметрии для БПЛА",
-    tag: "На складе",
+    tag: "FOXEER",
     color: "orange",
   },
 ];
