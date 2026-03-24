@@ -1,12 +1,8 @@
 import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const DRONE_IMAGE =
-  "https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/files/d5db5c51-517f-4d0a-80ac-bd336571e4a3.jpg";
-
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const droneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -68,34 +64,6 @@ export default function HeroSection() {
     };
     animate();
 
-    // Движение дрона-фото по экрану
-    const drone = droneRef.current;
-    if (drone) {
-      let t = 0;
-      let droneAnimId: number;
-      const moveDrone = () => {
-        t += 0.006;
-        const w = canvas.width;
-        const h = canvas.height;
-        const x = w * 0.1 + Math.sin(t * 0.5) * w * 0.55 + Math.sin(t * 0.9 + 1.2) * w * 0.08;
-        const y = h * 0.1 + Math.sin(t * 0.35 + 0.5) * h * 0.4 + Math.cos(t * 0.6) * h * 0.08;
-
-        // угол наклона по направлению движения
-        const dx = Math.cos(t * 0.5) * 0.55 * Math.PI * w + Math.cos(t * 0.9 + 1.2) * 0.08 * Math.PI * w;
-        const tiltX = Math.sin(t * 0.35 + 0.5) * 6;
-        const tiltZ = Math.atan2(dx, 200) * (180 / Math.PI) * 0.3;
-
-        drone.style.transform = `translate(${x}px, ${y}px) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg)`;
-        droneAnimId = requestAnimationFrame(moveDrone);
-      };
-      moveDrone();
-
-      return () => {
-        cancelAnimationFrame(animId);
-        cancelAnimationFrame(droneAnimId);
-      };
-    }
-
     const onResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -119,23 +87,7 @@ export default function HeroSection() {
     >
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
 
-      {/* Летящий дрон — настоящее фото */}
-      <div
-        ref={droneRef}
-        className="absolute top-0 left-0 pointer-events-none z-[1] will-change-transform"
-        style={{ width: 220, height: 220, marginLeft: -110, marginTop: -110 }}
-      >
-        <div className="relative w-full h-full">
-          {/* ореол */}
-          <div className="absolute inset-0 rounded-full bg-brand-blue/20 blur-2xl scale-110" />
-          <img
-            src={DRONE_IMAGE}
-            alt="дрон"
-            className="w-full h-full object-cover rounded-2xl opacity-80 drop-shadow-2xl"
-            style={{ filter: "drop-shadow(0 0 18px rgba(0,153,255,0.5))" }}
-          />
-        </div>
-      </div>
+
 
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/10 rounded-full blur-3xl animate-pulse" />
