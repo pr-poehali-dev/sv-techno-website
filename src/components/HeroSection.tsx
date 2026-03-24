@@ -1,53 +1,12 @@
 import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-function drawDroneShape(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, angle: number) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(angle);
-  ctx.strokeStyle = "rgba(0,153,255,0.85)";
-  ctx.fillStyle = "rgba(0,153,255,0.15)";
-  ctx.lineWidth = 1.5;
-
-  // тело
-  ctx.beginPath();
-  ctx.roundRect(-size * 0.15, -size * 0.15, size * 0.3, size * 0.3, size * 0.06);
-  ctx.fill();
-  ctx.stroke();
-
-  // 4 луча
-  const arms = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
-  arms.forEach(([dx, dy]) => {
-    ctx.beginPath();
-    ctx.moveTo(dx * size * 0.12, dy * size * 0.12);
-    ctx.lineTo(dx * size * 0.42, dy * size * 0.42);
-    ctx.stroke();
-
-    // пропеллер
-    ctx.save();
-    ctx.translate(dx * size * 0.44, dy * size * 0.44);
-    ctx.strokeStyle = "rgba(0,200,255,0.7)";
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.ellipse(0, 0, size * 0.18, size * 0.04, Math.PI / 4, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.ellipse(0, 0, size * 0.18, size * 0.04, -Math.PI / 4, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-  });
-
-  // огонёк
-  ctx.beginPath();
-  ctx.arc(0, 0, size * 0.05, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(0,220,255,0.9)";
-  ctx.fill();
-
-  ctx.restore();
-}
+const DRONE_IMAGE =
+  "https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/files/d5db5c51-517f-4d0a-80ac-bd336571e4a3.jpg";
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const droneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -76,24 +35,9 @@ export default function HeroSection() {
       });
     }
 
-    // дрон — плавная траектория через синусоиды
-    const drone = {
-      t: 0,
-      size: 28,
-      propAngle: 0,
-      trail: [] as { x: number; y: number }[],
-    };
-
-    const getDronePos = (t: number) => ({
-      x: canvas.width * 0.15 + Math.sin(t * 0.4) * canvas.width * 0.55 + Math.sin(t * 0.7 + 1) * canvas.width * 0.1,
-      y: canvas.height * 0.25 + Math.sin(t * 0.3 + 0.5) * canvas.height * 0.35 + Math.cos(t * 0.5) * canvas.height * 0.1,
-    });
-
     let animId: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // частицы
       particles.forEach((p) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
@@ -105,7 +49,6 @@ export default function HeroSection() {
         ctx.fillStyle = p.color + p.opacity + ")";
         ctx.fill();
       });
-
       particles.forEach((p, i) => {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = p.x - particles[j].x;
@@ -121,42 +64,37 @@ export default function HeroSection() {
           }
         }
       });
-
-      // двигаем дрон
-      drone.t += 0.008;
-      drone.propAngle += 0.3;
-      const pos = getDronePos(drone.t);
-      const nextPos = getDronePos(drone.t + 0.02);
-      const angle = Math.atan2(nextPos.y - pos.y, nextPos.x - pos.x);
-
-      drone.trail.push({ x: pos.x, y: pos.y });
-      if (drone.trail.length > 60) drone.trail.shift();
-
-      // след дрона
-      for (let i = 1; i < drone.trail.length; i++) {
-        const alpha = (i / drone.trail.length) * 0.35;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(0,180,255,${alpha})`;
-        ctx.lineWidth = 1.5 * (i / drone.trail.length);
-        ctx.moveTo(drone.trail[i - 1].x, drone.trail[i - 1].y);
-        ctx.lineTo(drone.trail[i].x, drone.trail[i].y);
-        ctx.stroke();
-      }
-
-      // ореол под дроном
-      const grd = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, drone.size * 2.5);
-      grd.addColorStop(0, "rgba(0,153,255,0.12)");
-      grd.addColorStop(1, "rgba(0,153,255,0)");
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, drone.size * 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = grd;
-      ctx.fill();
-
-      drawDroneShape(ctx, pos.x, pos.y, drone.size, angle);
-
       animId = requestAnimationFrame(animate);
     };
     animate();
+
+    // Движение дрона-фото по экрану
+    const drone = droneRef.current;
+    if (drone) {
+      let t = 0;
+      let droneAnimId: number;
+      const moveDrone = () => {
+        t += 0.006;
+        const w = canvas.width;
+        const h = canvas.height;
+        const x = w * 0.1 + Math.sin(t * 0.5) * w * 0.55 + Math.sin(t * 0.9 + 1.2) * w * 0.08;
+        const y = h * 0.1 + Math.sin(t * 0.35 + 0.5) * h * 0.4 + Math.cos(t * 0.6) * h * 0.08;
+
+        // угол наклона по направлению движения
+        const dx = Math.cos(t * 0.5) * 0.55 * Math.PI * w + Math.cos(t * 0.9 + 1.2) * 0.08 * Math.PI * w;
+        const tiltX = Math.sin(t * 0.35 + 0.5) * 6;
+        const tiltZ = Math.atan2(dx, 200) * (180 / Math.PI) * 0.3;
+
+        drone.style.transform = `translate(${x}px, ${y}px) rotateX(${tiltX}deg) rotateZ(${tiltZ}deg)`;
+        droneAnimId = requestAnimationFrame(moveDrone);
+      };
+      moveDrone();
+
+      return () => {
+        cancelAnimationFrame(animId);
+        cancelAnimationFrame(droneAnimId);
+      };
+    }
 
     const onResize = () => {
       canvas.width = window.innerWidth;
@@ -180,6 +118,24 @@ export default function HeroSection() {
       className="relative min-h-screen flex items-center overflow-hidden bg-background grid-bg"
     >
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
+
+      {/* Летящий дрон — настоящее фото */}
+      <div
+        ref={droneRef}
+        className="absolute top-0 left-0 pointer-events-none z-[1] will-change-transform"
+        style={{ width: 220, height: 220, marginLeft: -110, marginTop: -110 }}
+      >
+        <div className="relative w-full h-full">
+          {/* ореол */}
+          <div className="absolute inset-0 rounded-full bg-brand-blue/20 blur-2xl scale-110" />
+          <img
+            src={DRONE_IMAGE}
+            alt="дрон"
+            className="w-full h-full object-cover rounded-2xl opacity-80 drop-shadow-2xl"
+            style={{ filter: "drop-shadow(0 0 18px rgba(0,153,255,0.5))" }}
+          />
+        </div>
+      </div>
 
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/10 rounded-full blur-3xl animate-pulse" />
