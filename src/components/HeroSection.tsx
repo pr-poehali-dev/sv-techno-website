@@ -1,8 +1,50 @@
 import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const DRONE_IMAGE =
-  "https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/files/d5db5c51-517f-4d0a-80ac-bd336571e4a3.jpg";
+function drawDroneShape(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, angle: number) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.strokeStyle = "rgba(0,153,255,0.85)";
+  ctx.fillStyle = "rgba(0,153,255,0.15)";
+  ctx.lineWidth = 1.5;
+
+  // тело
+  ctx.beginPath();
+  ctx.roundRect(-size * 0.15, -size * 0.15, size * 0.3, size * 0.3, size * 0.06);
+  ctx.fill();
+  ctx.stroke();
+
+  // 4 луча
+  const arms = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+  arms.forEach(([dx, dy]) => {
+    ctx.beginPath();
+    ctx.moveTo(dx * size * 0.12, dy * size * 0.12);
+    ctx.lineTo(dx * size * 0.42, dy * size * 0.42);
+    ctx.stroke();
+
+    // пропеллер
+    ctx.save();
+    ctx.translate(dx * size * 0.44, dy * size * 0.44);
+    ctx.strokeStyle = "rgba(0,200,255,0.7)";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size * 0.18, size * 0.04, Math.PI / 4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size * 0.18, size * 0.04, -Math.PI / 4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  // огонёк
+  ctx.beginPath();
+  ctx.arc(0, 0, size * 0.05, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(0,220,255,0.9)";
+  ctx.fill();
+
+  ctx.restore();
+}
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,17 +59,11 @@ export default function HeroSection() {
     canvas.height = window.innerHeight;
 
     const particles: {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-      color: string;
+      x: number; y: number; vx: number; vy: number;
+      size: number; opacity: number; color: string;
     }[] = [];
 
     const colors = ["rgba(0,153,255,", "rgba(255,136,0,", "rgba(0,200,255,"];
-
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -40,12 +76,26 @@ export default function HeroSection() {
       });
     }
 
+    // дрон — плавная траектория через синусоиды
+    const drone = {
+      t: 0,
+      size: 28,
+      propAngle: 0,
+      trail: [] as { x: number; y: number }[],
+    };
+
+    const getDronePos = (t: number) => ({
+      x: canvas.width * 0.15 + Math.sin(t * 0.4) * canvas.width * 0.55 + Math.sin(t * 0.7 + 1) * canvas.width * 0.1,
+      y: canvas.height * 0.25 + Math.sin(t * 0.3 + 0.5) * canvas.height * 0.35 + Math.cos(t * 0.5) * canvas.height * 0.1,
+    });
+
     let animId: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // частицы
       particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
@@ -71,6 +121,38 @@ export default function HeroSection() {
           }
         }
       });
+
+      // двигаем дрон
+      drone.t += 0.008;
+      drone.propAngle += 0.3;
+      const pos = getDronePos(drone.t);
+      const nextPos = getDronePos(drone.t + 0.02);
+      const angle = Math.atan2(nextPos.y - pos.y, nextPos.x - pos.x);
+
+      drone.trail.push({ x: pos.x, y: pos.y });
+      if (drone.trail.length > 60) drone.trail.shift();
+
+      // след дрона
+      for (let i = 1; i < drone.trail.length; i++) {
+        const alpha = (i / drone.trail.length) * 0.35;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(0,180,255,${alpha})`;
+        ctx.lineWidth = 1.5 * (i / drone.trail.length);
+        ctx.moveTo(drone.trail[i - 1].x, drone.trail[i - 1].y);
+        ctx.lineTo(drone.trail[i].x, drone.trail[i].y);
+        ctx.stroke();
+      }
+
+      // ореол под дроном
+      const grd = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, drone.size * 2.5);
+      grd.addColorStop(0, "rgba(0,153,255,0.12)");
+      grd.addColorStop(1, "rgba(0,153,255,0)");
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, drone.size * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      drawDroneShape(ctx, pos.x, pos.y, drone.size, angle);
 
       animId = requestAnimationFrame(animate);
     };
