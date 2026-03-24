@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
+
 const navLinks = [
   { href: "#home", label: "Главная" },
   { href: "#about", label: "О компании" },
@@ -36,19 +37,13 @@ export default function Navbar() {
       <div className="container mx-auto px-6 flex items-center justify-between h-16 md:h-20">
         <button
           onClick={() => handleNav("#home")}
-          className="flex items-center gap-3 group"
+          className="flex items-center group"
         >
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-blue to-cyan-400 flex items-center justify-center glow-blue group-hover:scale-105 transition-transform">
-            <Icon name="Zap" size={20} className="text-background" />
-          </div>
-          <div className="text-left">
-            <div className="font-display text-base font-bold text-foreground leading-tight">
-              СВ-ТехноГрупп
-            </div>
-            <div className="text-[10px] text-muted-foreground tracking-widest uppercase">
-              БПЛА · Аккумуляторы
-            </div>
-          </div>
+          <img
+            src="https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/bucket/fc847760-8653-4140-98f8-f07d3569cb4a.png"
+            alt="СВ-ТехноГрупп"
+            className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform"
+          />
         </button>
 
         <nav className="hidden md:flex items-center gap-8">
