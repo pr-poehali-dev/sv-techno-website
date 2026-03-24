@@ -52,9 +52,9 @@ export default function Footer() {
                 <Icon name="Phone" size={14} className="text-brand-blue" />
                 8-986-741-99-24
               </a>
-              <a href="tel:89953137526" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
+              <a href="tel:89953137576" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
                 <Icon name="Phone" size={14} className="text-brand-blue" />
-                8-995-313-75-26
+                8-995-313-75-76
               </a>
               <a href="mailto:sv-group33@mail.ru" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
                 <Icon name="Mail" size={14} className="text-brand-blue" />

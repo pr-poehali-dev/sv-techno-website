@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 const contacts = [
   {
     role: "Отдел продаж",
-    phone: "8-995-313-75-26",
+    phone: "8-995-313-75-76",
     email: "manager.sv-group33@mail.ru",
     icon: "Users",
   },

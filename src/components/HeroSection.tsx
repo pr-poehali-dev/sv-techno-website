@@ -158,12 +158,12 @@ export default function HeroSection() {
           </div>
 
           <div className="relative hidden lg:flex justify-center items-center">
-            <div className="relative w-full max-w-lg">
-              <div className="absolute inset-0 bg-brand-blue/20 rounded-2xl blur-3xl" />
+            <div className="relative w-full max-w-lg flex flex-col items-center gap-6">
+              <div className="absolute inset-0 bg-brand-blue/15 rounded-3xl blur-3xl" />
               <img
-                src={DRONE_IMAGE}
-                alt="Беспилотник БПЛА"
-                className="relative z-10 w-full rounded-2xl object-cover aspect-square animate-drone-fly border border-brand-blue/20"
+                src="https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/bucket/fc847760-8653-4140-98f8-f07d3569cb4a.png"
+                alt="СВ-ТехноГрупп логотип"
+                className="relative z-10 w-full max-w-md drop-shadow-2xl"
               />
               <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-brand-orange/40 rounded-full animate-pulse-ring" />
               <div className="absolute -bottom-4 -left-4 w-16 h-16 border border-brand-blue/40 rounded-lg rotate-45 animate-pulse" />
