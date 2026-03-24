@@ -49,7 +49,7 @@ const partners = [
   { name: "CADXX", desc: "Оптические системы и камеры" },
   { name: "HOBBYWING", desc: "Электронные регуляторы скорости" },
   { name: "Brother Hobby", desc: "Бесколлекторные моторы" },
-  { name: "FOXEER", desc: "FPV-камеры и видеосистемы" },
+  { name: "FOXEER", desc: "Камеры, видеопередатчики, регуляторы скорости, антенны" },
 ];
 
 export default function ProductionSection() {
