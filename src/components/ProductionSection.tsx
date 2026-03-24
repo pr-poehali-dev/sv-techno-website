@@ -13,11 +13,11 @@ const batteries = [
   {
     model: "6S2P 8000 мАч",
     desc: "Компактное решение для лёгких дронов",
-    highlight: true,
+    highlight: false,
   },
   {
     model: "6S2P 16000 мАч",
-    desc: "Максимальная автономность для профессиональных задач",
+    desc: "Увеличенная ёмкость для длительных полётов",
     highlight: false,
   },
 ];
@@ -115,33 +115,22 @@ export default function ProductionSection() {
             {batteries.map((b) => (
               <div
                 key={b.model}
-                className={`p-5 rounded-xl border transition-all duration-300 group cursor-default ${
-                  b.highlight
-                    ? "bg-brand-blue/10 border-brand-blue/40 glow-blue"
-                    : "bg-secondary/30 border-white/10 hover:border-brand-blue/30"
-                }`}
+                className="p-5 rounded-xl border transition-all duration-300 group cursor-default bg-secondary/30 border-white/10 hover:border-brand-blue/30"
               >
                 <div className="flex items-start gap-4">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    b.highlight ? "bg-brand-blue text-background" : "bg-brand-blue/15 text-brand-blue"
-                  }`}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-brand-blue/15 text-brand-blue">
                     <Icon name="Battery" size={20} />
                   </div>
                   <div>
                     <div className="font-display text-lg font-bold text-foreground">{b.model}</div>
                     <div className="text-sm text-muted-foreground font-body mt-1">{b.desc}</div>
                   </div>
-                  {b.highlight && (
-                    <span className="ml-auto text-xs bg-brand-blue text-background px-2 py-1 rounded-md font-body font-semibold flex-shrink-0">
-                      Популярный
-                    </span>
-                  )}
                 </div>
               </div>
             ))}
             <div className="mt-6 text-sm text-muted-foreground font-body p-4 rounded-xl bg-secondary/20 border border-white/5">
               <Icon name="Info" size={14} className="inline mr-2 text-brand-blue" />
-              Производство АКБ различной ёмкости и конфигурации под технические требования заказчика
+              Это лишь примеры. Производим АКБ любой ёмкости и конфигурации под конкретные требования заказчика.
             </div>
           </div>
         </div>
