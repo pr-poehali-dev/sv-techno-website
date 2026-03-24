@@ -11,16 +11,14 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-blue to-cyan-400 flex items-center justify-center">
-                <Icon name="Zap" size={20} className="text-background" />
-              </div>
-              <div>
-                <div className="font-display text-base font-bold text-foreground">СВ-ТехноГрупп</div>
-                <div className="text-[10px] text-muted-foreground tracking-widest uppercase">БПЛА · Аккумуляторы</div>
-              </div>
+              <img
+                src="https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/bucket/2f4de81e-697b-4f98-947e-a37ca0cb4997.png"
+                alt="SV-TechnoGroup"
+                className="h-14 w-auto object-contain"
+              />
             </div>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
-              Поставщик аккумуляторов и комплектующих для БПЛА. Прямые поставки из Китая, собственное производство в России.
+              Поставщик аккумуляторов для БПЛА. Прямые поставки из Китая, собственное производство в России.
             </p>
           </div>
 
@@ -73,7 +71,7 @@ export default function Footer() {
             © 2024 ООО «СВ-ТехноГрупп». Все права защищены.
           </p>
           <p className="text-xs text-muted-foreground font-body">
-            Поставщик комплектующих для БПЛА · Россия
+            Поставщик аккумуляторов для БПЛА · Россия
           </p>
         </div>
       </div>
