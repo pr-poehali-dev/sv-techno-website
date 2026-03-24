@@ -48,10 +48,6 @@ export default function Footer() {
           <div>
             <div className="font-display text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Контакты</div>
             <div className="space-y-3">
-              <a href="tel:89867419924" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
-                <Icon name="Phone" size={14} className="text-brand-blue" />
-                8-986-741-99-24
-              </a>
               <a href="tel:89953137576" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
                 <Icon name="Phone" size={14} className="text-brand-blue" />
                 8-995-313-75-76
@@ -59,6 +55,10 @@ export default function Footer() {
               <a href="mailto:sv-group33@mail.ru" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
                 <Icon name="Mail" size={14} className="text-brand-blue" />
                 sv-group33@mail.ru
+              </a>
+              <a href="mailto:manager.sv-group33@mail.ru" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-blue transition-colors font-body">
+                <Icon name="Mail" size={14} className="text-brand-blue" />
+                manager.sv-group33@mail.ru
               </a>
               <div className="flex items-center gap-2 text-sm text-muted-foreground font-body">
                 <Icon name="MapPin" size={14} className="text-brand-blue" />
