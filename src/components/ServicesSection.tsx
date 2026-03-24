@@ -1,9 +1,6 @@
 import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const COMPONENTS_IMAGE =
-  "https://cdn.poehali.dev/projects/dfb49ee8-efb6-4a16-899e-6b2691fe21f4/files/36e19a84-8fed-45c5-a7dd-c9bc4185f70a.jpg";
-
 const products = [
   {
     icon: "Battery",
@@ -123,7 +120,7 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-2xl mx-auto">
           <div className="reveal">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 text-brand-blue text-sm mb-6 font-body">
               <Icon name="Clock" size={14} />
@@ -163,18 +160,6 @@ export default function ServicesSection() {
             </div>
           </div>
 
-          <div className="reveal relative">
-            <div className="absolute inset-0 bg-brand-orange/10 rounded-2xl blur-3xl" />
-            <img
-              src={COMPONENTS_IMAGE}
-              alt="Комплектующие для БПЛА"
-              className="relative z-10 w-full rounded-2xl object-cover border border-brand-orange/20"
-            />
-            <div className="absolute -top-3 -left-3 px-4 py-2 bg-background border border-brand-blue/30 rounded-lg text-sm font-body text-brand-blue glow-blue">
-              <Icon name="CheckCircle" size={14} className="inline mr-1" />
-              Оригинальная продукция
-            </div>
-          </div>
         </div>
       </div>
     </section>
